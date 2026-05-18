@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نظام قياس أداء فريق المحتوى | نسخة الأستاذ عبد الله طارق</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Cairo', sans-serif; background-color: #f1f5f9; color: #0f172a; }
+        .kpi-card { background: white; border-radius: 16px; padding: 15px; border: 1px solid #e2e8f0; transition: all 0.3s ease; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1); }
+        .progress-bar { height: 10px; border-radius: 5px; background: #f1f5f9; overflow: hidden; border: 1px solid #e2e8f0; }
+        .progress-fill { height: 100%; transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1); }
+        @media print {
+            .no-print { display: none !important; }
+            body { background: white; padding: 0; }
+            .print-container { width: 100%; padding: 0; margin: 0; max-width: 100%; }
+            .kpi-card { border: 1px solid #ddd; box-shadow: none; margin-bottom: 10px; break-inside: avoid; }
+            .grid { display: block !important; }
+            .grid-cols-12 { display: flex !important; flex-wrap: wrap; }
+            .lg\:col-span-9 { width: 100% !important; }
+        }
+    </style>
+</head>
+<body class="p-2 md:p-6">
+
+    <div class="max-w-[1250px] mx-auto space-y-4 print-container">
+        <!-- Header Section -->
+        <header class="flex justify-between items-center bg-white p-5 rounded-2xl shadow-md border-r-[10px] border-indigo-600">
+            <div>
+                <h1 class="text-2xl font-black text-slate-900 tracking-tight">منصة قياس الإنتاجية التشغيلية</h1>
+                <p class="text-xs text-indigo-600 mt-1 font-bold">تقرير دوري مرفوع للأستاذ: عبد الله طارق - مدير قسم التسويق</p>
+            </div>
+            <div class="text-left flex flex-col items-end">
+                <span id="liveClock" class="text-sm font-bold text-slate-500 mb-2"></span>
+                <button onclick="window.print()" class="no-print bg-slate-900 hover:bg-black text-white text-xs px-5 py-2.5 rounded-xl font-bold transition-all shadow-lg flex items-center gap-2">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path></svg>
+                    تصدير التقرير النهائي (A4)
+                </button>
+            </div>
+        </header>
+
+        <!-- Main Dashboard Layout -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-5">
+            
+            <!-- Sidebar: Input Form -->
+            <aside class="lg:col-span-3 space-y-4 no-print">
+                <section class="kpi-card border-t-4 border-indigo-500 bg-white/80 backdrop-blur-md">
+                    <h2 class="text-sm font-bold mb-4 flex items-center gap-2 text-slate-800">
+                        <svg class="w-5 h-5 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
+                        تسجيل مهمة جديدة
+                    </h2>
+                    <form id="taskForm" class="space-y-4">
+                        <div>
+                            <label class="block text-[11px] font-bold text-slate-500 mb-1.5">العضو القائم بالمهمة</label>
+                            <select id="memberId" class="w-full text-xs border-slate-200 rounded-lg p-3 bg-slate-50 outline-none focus:ring-2 focus:ring-indigo-200 border transition-all" onchange="updateTaskTypes()">
+                                <option value="ehab">إيهاب (مترجم)</option>
+                                <option value="ali">علي (مدقق/كاتب)</option>
+                                <option value="leader">قائد الفريق (إدارة/تنفيذ)</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-[11px] font-bold text-slate-500 mb-1.5">عنوان المقال / العمل</label>
+                            <input type="text" id="taskTitle" required placeholder="ادخل العنوان بدقة..." class="w-full text-xs border-slate-200 rounded-lg p-3 bg-slate-50 outline-none focus:ring-2 focus:ring-indigo-200 border transition-all">
+                        </div>
+                        <div>
+                            <label class="block text-[11px] font-bold text-slate-500 mb-1.5">تصنيف النشاط</label>
+                            <select id="taskType" class="w-full text-xs border-slate-200 rounded-lg p-3 bg-slate-50 outline-none border"></select>
+                        </div>
+                        <div>
+                            <label class="block text-[11px] font-bold text-slate-500 mb-1.5">معيار الجودة المطبق</label>
+                            <select id="qualityStandard" class="w-full text-xs border-slate-200 rounded-lg p-3 bg-slate-50 outline-none border focus:ring-2 focus:ring-emerald-200">
+                                <option value="SEO">توافق SEO الكلمات المفتاحية</option>
+                                <option value="Linguistic">سلامة اللغة والتدقيق اللغوي</option>
+                                <option value="Sources">دقة المصادر والاقتباسات</option>
+                                <option value="Tone">قوة الأسلوب وجذب القارئ</option>
+                                <option value="Visuals">مراجعة الروابط والصور المرفقة</option>
+                                <option value="Context">دقة المعنى والسياق (للترجمة)</option>
+                            </select>
+                        </div>
+                        <div class="flex items-center gap-3 p-3 bg-rose-50 rounded-xl border border-rose-100">
+                            <input type="checkbox" id="isUrgent" class="w-4 h-4 text-rose-600 rounded cursor-pointer">
+                            <label for="isUrgent" class="text-[11px] font-bold text-rose-800 cursor-pointer">مهمة عاجلة (Urgent)</label>
+                        </div>
+                        <div class="hidden"> <!-- Hidden but used for logic -->
+                            <input type="datetime-local" id="taskTime">
+                        </div>
+                        <button type="submit" class="w-full bg-indigo-600 text-white font-bold text-sm py-3.5 rounded-xl hover:bg-indigo-700 transition-all shadow-xl active:scale-95">
+                            إدراج وتحديث الإحصائيات
+                        </button>
+                    </form>
+                </section>
+                <button onclick="clearData()" class="w-full text-[10px] text-slate-400 hover:text-rose-600 transition-colors font-medium">إعادة ضبط قاعدة البيانات</button>
+            </aside>
+
+            <!-- Main Content: Stats & Report -->
+            <main class="lg:col-span-9 space-y-4">
+                
+                <!-- KPI Status Cards -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div class="kpi-card relative overflow-hidden" id="card-ehab">
+                        <div class="flex justify-between items-center mb-3">
+                            <span class="text-xs font-black text-slate-700 uppercase tracking-wider">إيهاب (المترجم)</span>
+                            <span class="text-[10px] font-bold bg-indigo-100 text-indigo-700 px-2.5 py-1 rounded-full">الهدف اليومي: 3</span>
+                        </div>
+                        <div class="flex items-baseline gap-1">
+                            <span class="text-3xl font-black text-indigo-600" id="count-ehab">0</span>
+                            <span class="text-slate-400 text-xs font-bold">/ 3 مقالات</span>
+                        </div>
+                        <div class="progress-bar mt-4"><div id="bar-ehab" class="progress-fill bg-indigo-500 shadow-[0_0_8px_rgba(79,70,229,0.4)]" style="width: 0%"></div></div>
+                    </div>
+
+                    <div class="kpi-card relative overflow-hidden" id="card-ali">
+                        <div class="flex justify-between items-center mb-3">
+                            <span class="text-xs font-black text-slate-700 uppercase tracking-wider">علي (المدقق)</span>
+                            <span class="text-[10px] font-bold bg-emerald-100 text-emerald-700 px-2.5 py-1 rounded-full">الهدف اليومي: 3</span>
+                        </div>
+                        <div class="flex items-baseline gap-1">
+                            <span class="text-3xl font-black text-emerald-600" id="count-ali">0</span>
+                            <span class="text-slate-400 text-xs font-bold">/ 3 مهام</span>
+                        </div>
+                        <div class="progress-bar mt-4"><div id="bar-ali" class="progress-fill bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.4)]" style="width: 0%"></div></div>
+                    </div>
+
+                    <div class="kpi-card relative overflow-hidden" id="card-leader">
+                        <div class="flex justify-between items-center mb-3">
+                            <span class="text-xs font-black text-slate-700 uppercase tracking-wider">قائد الفريق</span>
+                            <span class="text-[10px] font-bold bg-amber-100 text-amber-700 px-2.5 py-1 rounded-full">الهدف الرئيسي: 1</span>
+                        </div>
+                        <div class="flex items-baseline gap-1">
+                            <span class="text-3xl font-black text-amber-600" id="count-leader">0</span>
+                            <span class="text-slate-400 text-xs font-bold">/ 1 مقال</span>
+                        </div>
+                        <div class="progress-bar mt-4"><div id="bar-leader" class="progress-fill bg-amber-500 shadow-[0_0_8px_rgba(245,158,11,0.4)]" style="width: 0%"></div></div>
+                        <div class="flex justify-between mt-3 text-[9px] font-bold text-slate-500 border-t pt-2">
+                            <span>مراجعات: <span id="meta-reviews" class="text-indigo-600">0</span></span>
+                            <span>مسودات: <span id="meta-drafts" class="text-indigo-600">0</span></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Infographics & Star Row -->
+                <div class="grid grid-cols-1 md:grid-cols-12 gap-4">
+                    <div class="md:col-span-4 kpi-card flex flex-col items-center justify-center p-6 bg-gradient-to-b from-white to-slate-50">
+                        <h3 class="text-[10px] font-bold text-slate-400 mb-4 uppercase tracking-[2px]">مؤشر كفاءة الفريق</h3>
+                        <div class="relative w-40 h-40">
+                            <canvas id="gaugeChart"></canvas>
+                            <div id="gaugeLabel" class="absolute inset-0 flex items-center justify-center font-black text-2xl text-slate-800 mt-4">0%</div>
+                        </div>
+                    </div>
+                    
+                    <div class="md:col-span-5 kpi-card">
+                        <h3 class="text-[10px] font-bold text-slate-400 mb-4 uppercase tracking-[2px]">تحليل الأداء المقارن</h3>
+                        <canvas id="barChart" class="max-h-[160px]"></canvas>
+                    </div>
+
+                    <div class="md:col-span-3 kpi-card bg-slate-900 text-white flex flex-col items-center justify-center text-center relative overflow-hidden group">
+                        <div class="absolute inset-0 bg-indigo-600/20 group-hover:scale-110 transition-transform duration-700"></div>
+                        <p class="text-[10px] font-bold opacity-60 uppercase tracking-widest relative z-10">نجم الأسبوع المقترح</p>
+                        <div class="text-4xl my-3 drop-shadow-lg relative z-10" id="starIcon">⭐</div>
+                        <div class="font-black text-lg relative z-10" id="starName">قيد المراجعة...</div>
+                        <div class="text-[9px] mt-2 bg-white/10 px-3 py-1 rounded-full relative z-10" id="starReason">بناءً على معايير الدقة</div>
+                    </div>
+                </div>
+
+                <!-- Executive Formal Report -->
+                <section class="kpi-card border-r-8 border-indigo-600 bg-white shadow-xl">
+                    <div class="flex justify-between items-center mb-4 border-b pb-3">
+                        <h2 class="text-sm font-black text-indigo-900">التقرير التنفيذي الموجه للإدارة العليا</h2>
+                        <span class="text-[10px] bg-slate-100 text-slate-500 px-3 py-1 rounded font-bold">نموذج رسمي مخصص</span>
+                    </div>
+                    <div id="formalReportText" class="text-xs text-slate-700 leading-relaxed min-h-[100px] space-y-3">
+                        <p class="text-center text-slate-300 py-6 italic font-medium">في انتظار استكمال البيانات لإصدار الصياغة القانونية والتقرير الختامي...</p>
+                    </div>
+                </section>
+
+                <!-- Detailed Operational Log -->
+                <section class="kpi-card p-0 overflow-hidden border-none shadow-lg">
+                    <div class="bg-slate-800 text-white px-5 py-3 text-xs font-bold flex justify-between items-center">
+                        <span class="flex items-center gap-2">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M4 6h16M4 10h16M4 14h16M4 18h16"></path></svg>
+                            سجل التفاصيل التشغيلية للمقالات
+                        </span>
+                        <span id="totalTasksCount" class="bg-indigo-500 px-3 py-1 rounded-full text-[10px]">0 مهمة منجزة</span>
+                    </div>
+                    <div class="max-h-[220px] overflow-y-auto">
+                        <table class="w-full text-right text-[11px]">
+                            <thead class="bg-slate-50 sticky top-0 border-b border-slate-100 shadow-sm">
+                                <tr>
+                                    <th class="p-4 font-bold text-slate-500">التوقيت</th>
+                                    <th class="p-4 font-bold text-slate-500">العضو</th>
+                                    <th class="p-4 font-bold text-slate-500">اسم المقال</th>
+                                    <th class="p-4 font-bold text-slate-500">المعيار المحقق</th>
+                                    <th class="p-4 font-bold text-slate-500 text-center">الحالة</th>
+                                </tr>
+                            </thead>
+                            <tbody id="taskLogBody" class="divide-y divide-slate-50"></tbody>
+                        </table>
+                    </div>
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <script>
+        let tasks = JSON.parse(localStorage.getItem('team_tracker_pro_v5')) || [];
+        const targets = { ehab: 3, ali: 3, leader: 1 };
+        const memberNames = { ehab: 'إيهاب', ali: 'علي', leader: 'قائد الفريق' };
+        
+        let gaugeChart, barChart;
+
+        function updateTaskTypes() {
+            const memberId = document.getElementById('memberId').value;
+            const typeSelect = document.getElementById('taskType');
+            typeSelect.innerHTML = '';
+            
+            let options = [];
+            if (memberId === 'ehab') {
+                options = [{val: 'translate', text: 'ترجمة مقال أساسي'}];
+            } else if (memberId === 'ali') {
+                options = [
+                    {val: 'write', text: 'كتابة مقال جديد'},
+                    {val: 'edit', text: 'تدقيق لغوي شامل'},
+                    {val: 'quote', text: 'اقتباس وتطوير محتوى'}
+                ];
+            } else if (memberId === 'leader') {
+                options = [
+                    {val: 'core', text: 'كتابة/تدقيق مقال القائد (الأساسي)'},
+                    {val: 'review', text: 'مراجعة فنية لعمل الفريق'},
+                    {val: 'draft', text: 'إنشاء مسودة معتمدة (Draft)'}
+                ];
+            }
+
+            options.forEach(opt => {
+                const el = document.createElement('option');
+                el.value = opt.val;
+                el.textContent = opt.text;
+                typeSelect.appendChild(el);
+            });
+        }
+
+        function init() {
+            updateLiveClock();
+            updateTaskTypes();
+            renderDashboard();
+            setInterval(updateLiveClock, 1000);
+        }
+
+        function updateLiveClock() {
+            const now = new Date();
+            document.getElementById('liveClock').innerText = now.toLocaleString('ar-EG', { 
+                weekday: 'long', day: 'numeric', month: 'long', hour: '2-digit', minute: '2-digit' 
+            });
+        }
+
+        document.getElementById('taskForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const newTask = {
+                id: Date.now(),
+                memberId: document.getElementById('memberId').value,
+                taskTitle: document.getElementById('taskTitle').value,
+                taskType: document.getElementById('taskType').value,
+                qualityStandard: document.getElementById('qualityStandard').value,
+                time: new Date().toISOString(),
+                isUrgent: document.getElementById('isUrgent').checked
+            };
+            tasks.push(newTask);
+            save();
+            e.target.reset();
+            updateTaskTypes();
+            renderDashboard();
+        });
+
+        function save() { localStorage.setItem('team_tracker_pro_v5', JSON.stringify(tasks)); }
+
+        function clearData() {
+            if(confirm('سيتم حذف كافة سجلات الأسبوع، هل أنت متأكد؟')) {
+                tasks = [];
+                save();
+                renderDashboard();
+            }
+        }
+
+        function renderDashboard() {
+            const stats = {
+                ehab: tasks.filter(t => t.memberId === 'ehab' && t.taskType === 'translate').length,
+                ali: tasks.filter(t => t.memberId === 'ali').length, // Counts write/edit/quote
+                leaderCore: tasks.filter(t => t.memberId === 'leader' && t.taskType === 'core').length,
+                leaderReviews: tasks.filter(t => t.memberId === 'leader' && t.taskType === 'review').length,
+                leaderDrafts: tasks.filter(t => t.memberId === 'leader' && t.taskType === 'draft').length,
+                urgents: tasks.filter(t => t.isUrgent).length
+            };
+
+            updateKPI('ehab', stats.ehab, targets.ehab);
+            updateKPI('ali', stats.ali, targets.ali);
+            updateKPI('leader', stats.leaderCore, targets.leader);
+            document.getElementById('meta-reviews').innerText = stats.leaderReviews;
+            document.getElementById('meta-drafts').innerText = stats.leaderDrafts;
+
+            updateCharts(stats);
+            updateStar(stats);
+            updateLog();
+            updateReport(stats);
+        }
+
+        function updateKPI(id, current, target) {
+            const percent = Math.min(100, (current / target) * 100);
+            document.getElementById(`count-${id}`).innerText = current;
+            document.getElementById(`bar-${id}`).style.width = `${percent}%`;
+            const card = document.getElementById(`card-${id}`);
+            if (percent >= 100) card.classList.add('border-emerald-200', 'bg-emerald-50/20');
+            else card.classList.remove('border-emerald-200', 'bg-emerald-50/20');
+        }
+
+        function updateCharts(stats) {
+            // Logic for average team performance
+            const ehabProg = Math.min(1, stats.ehab/3);
+            const aliProg = Math.min(1, stats.ali/3);
+            const leaderProg = Math.min(1, stats.leaderCore/1);
+            const avg = (((ehabProg + aliProg + leaderProg) / 3) * 100).toFixed(0);
+            
+            document.getElementById('gaugeLabel').innerText = avg + '%';
+
+            if (gaugeChart) gaugeChart.destroy();
+            if (barChart) barChart.destroy();
+
+            const ctxG = document.getElementById('gaugeChart').getContext('2d');
+            gaugeChart = new Chart(ctxG, {
+                type: 'doughnut',
+                data: {
+                    datasets: [{
+                        data: [avg, 100 - avg],
+                        backgroundColor: ['#4f46e5', '#f1f5f9'],
+                        borderWidth: 0,
+                        circumference: 180,
+                        rotation: 270
+                    }]
+                },
+                options: { cutout: '85%', plugins: { tooltip: { enabled: false } } }
+            });
+
+            const ctxB = document.getElementById('barChart').getContext('2d');
+            barChart = new Chart(ctxB, {
+                type: 'bar',
+                data: {
+                    labels: ['إيهاب', 'علي', 'القائد'],
+                    datasets: [
+                        { label: 'المنجز', data: [stats.ehab, stats.ali, stats.leaderCore], backgroundColor: '#4f46e5', borderRadius: 6 },
+                        { label: 'المستهدف', data: [3, 3, 1], backgroundColor: '#e2e8f0', borderRadius: 6 }
+                    ]
+                },
+                options: {
+                    scales: { y: { beginAtZero: true, grid: { display: false } } },
+                    plugins: { legend: { display: false } }
+                }
+            });
+        }
+
+        function updateStar(stats) {
+            if (tasks.length === 0) return;
+            const scores = {
+                ehab: (stats.ehab / 3) * 100 + (tasks.filter(t=>t.memberId==='ehab' && t.isUrgent).length * 20),
+                ali: (stats.ali / 3) * 100 + (tasks.filter(t=>t.memberId==='ali' && t.isUrgent).length * 20),
+                leader: (stats.leaderCore / 1) * 80 + (stats.leaderReviews * 15) + (stats.leaderDrafts * 15)
+            };
+            const winnerId = Object.keys(scores).reduce((a, b) => scores[a] > scores[b] ? a : b);
+            document.getElementById('starName').innerText = memberNames[winnerId];
+            document.getElementById('starReason').innerText = `بناءً على تحقيق ${Math.round(scores[winnerId])} نقطة إنتاجية`;
+        }
+
+        function updateReport(s) {
+            const reportDiv = document.getElementById('formalReportText');
+            if (tasks.length === 0) return;
+
+            const totalArticles = s.ehab + s.ali + s.leaderCore;
+            const star = document.getElementById('starName').innerText;
+
+            reportDiv.innerHTML = `
+                <div class="space-y-4">
+                    <p><strong>سعادة الأستاذ/ عبد الله طارق المحترم، مدير قسم التسويق،</strong></p>
+                    <p>نضع بين أيديكم تقرير أداء فريق المحتوى المحدث. تم رصد إنجاز <strong>${totalArticles}</strong> مقالاً متوافقاً مع المعايير، بالإضافة إلى <strong>${s.leaderReviews}</strong> مراجعة فنية و <strong>${s.leaderDrafts}</strong> مسودة معتمدة للنشر.</p>
+                    <div class="grid grid-cols-2 gap-4 bg-slate-50 p-3 rounded-xl border border-slate-100">
+                        <div>
+                            <span class="block text-[10px] text-slate-400">معدل الانضباط بالخطة:</span>
+                            <span class="font-bold text-indigo-600">${document.getElementById('gaugeLabel').innerText} إتمام</span>
+                        </div>
+                        <div>
+                            <span class="block text-[10px] text-slate-400">المهام العاجلة المنجزة:</span>
+                            <span class="font-bold text-rose-600">${s.urgents} مهمة طارئة</span>
+                        </div>
+                    </div>
+                    <p><strong>التوصية الإدارية:</strong> نود الإشادة بجهود <strong>${star}</strong> كأفضل أداء تشغيلي لهذا الأسبوع، نظراً لسرعة التنفيذ والالتزام بمعايير الجودة المطلوبة.</p>
+                </div>
+            `;
+        }
+
+        function updateLog() {
+            const body = document.getElementById('taskLogBody');
+            document.getElementById('totalTasksCount').innerText = `${tasks.length} مهمة منجزة`;
+            
+            const qualityLabels = {
+                'SEO': 'معايير SEO',
+                'Linguistic': 'تدقيق لغوي',
+                'Sources': 'توثيق مصادر',
+                'Tone': 'قوة الأسلوب',
+                'Visuals': 'تنسيق بصري',
+                'Context': 'دقة المعنى'
+            };
+
+            body.innerHTML = tasks.slice().reverse().map(t => `
+                <tr class="hover:bg-slate-50 transition-colors">
+                    <td class="p-4 text-slate-400 font-medium">${new Date(t.time).toLocaleTimeString('ar-EG', {hour:'2-digit', minute:'2-digit'})}</td>
+                    <td class="p-4 font-bold text-slate-700">${memberNames[t.memberId]}</td>
+                    <td class="p-4 text-slate-900 font-bold">${t.taskTitle}</td>
+                    <td class="p-4"><span class="bg-indigo-50 text-indigo-700 px-2 py-1 rounded text-[9px] font-bold">${qualityLabels[t.qualityStandard] || 'معيار عام'}</span></td>
+                    <td class="p-4 text-center">
+                        ${t.isUrgent ? '<span class="bg-rose-100 text-rose-600 px-2 py-0.5 rounded-full font-black">عاجل</span>' : '<span class="text-emerald-500 font-bold">✓ مكتمل</span>'}
+                    </td>
+                </tr>
+            `).join('') || '<tr><td colspan="5" class="p-10 text-center text-slate-300 italic">لا يوجد نشاط مسجل في السجل التشغيلي حالياً</td></tr>';
+        }
+
+        window.onload = init;
+    </script>
+</body>
+</html>
