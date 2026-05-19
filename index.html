@@ -17,13 +17,13 @@
         @media print {
             @page {
                 size: A4 landscape;
-                margin: 0.4cm;
+                margin: 0.3cm;
             }
             body { 
                 background: white; 
                 padding: 0; 
                 margin: 0; 
-                font-size: 10px;
+                font-size: 9px;
             }
             .no-print { 
                 display: none !important; 
@@ -35,17 +35,17 @@
                 margin: 0 !important; 
             }
             .matrix-table th {
-                padding: 4px !important;
-                font-size: 9px !important;
+                padding: 3px !important;
+                font-size: 8.5px !important;
                 background-color: #f1f5f9 !important;
             }
             .matrix-table td { 
-                min-height: 45px !important; 
-                padding: 3px !important;
+                min-height: 40px !important; 
+                padding: 2px !important;
                 font-size: 8px !important;
             }
             .task-tag { 
-                padding: 2px 4px !important; 
+                padding: 2px 3px !important; 
                 margin-bottom: 2px !important; 
                 border: 1px solid #e2e8f0 !important;
                 box-shadow: none !important;
@@ -57,25 +57,25 @@
             color: #1e293b; 
             font-weight: 800; 
             border: 1px solid #cbd5e1; 
-            font-size: 11px; 
-            padding: 5px;
+            font-size: 10.5px; 
+            padding: 4px;
         }
         .matrix-table td { 
             border: 1px solid #cbd5e1; 
             vertical-align: top; 
-            min-height: 60px; 
+            min-height: 50px; 
             width: 18%; 
             background: #ffffff; 
-            padding: 3px;
+            padding: 2px;
         }
         .task-tag { 
-            font-size: 9px; 
-            padding: 3px 5px; 
-            margin-bottom: 3px; 
-            border-radius: 6px; 
+            font-size: 8.5px; 
+            padding: 2.5px 4px; 
+            margin-bottom: 2.5px; 
+            border-radius: 5px; 
             background: #ffffff; 
             border-right: 3px solid #6366f1; 
-            box-shadow: 0 1px 2px rgba(0,0,0,0.04); 
+            box-shadow: 0 1px 2px rgba(0,0,0,0.03); 
             transition: all 0.2s ease;
         }
         .member-row-header { 
@@ -87,49 +87,49 @@
         }
     </style>
 </head>
-<body class="p-3 md:p-4">
+<body class="p-2 md:p-3">
 
-    <div class="max-w-[1400px] mx-auto space-y-3 report-container">
+    <div class="max-w-[1400px] mx-auto space-y-2.5 report-container">
         <!-- Header Section -->
-        <header class="flex justify-between items-center bg-white p-3 rounded-xl shadow-sm border-r-[6px] border-indigo-600">
+        <header class="flex justify-between items-center bg-white p-2.5 rounded-lg shadow-sm border-r-[5px] border-indigo-600">
             <div>
-                <h1 class="text-base font-black text-slate-800 flex items-center gap-2">
+                <h1 class="text-sm font-black text-slate-800 flex items-center gap-1.5">
                     <span>📊</span> سجل إنجاز المحتوى ومؤشرات الأداء الأسبوعية
                 </h1>
-                <p class="text-indigo-600 font-bold text-[11px] mt-0.5">مرفوع لسعادة الأستاذ: عبد الله طارق المحترم | مدير التسويق</p>
+                <p class="text-indigo-600 font-bold text-[10px] mt-0.5">مرفوع لسعادة الأستاذ: عبد الله طارق المحترم | مدير التسويق</p>
             </div>
-            <button onclick="window.print()" class="no-print bg-indigo-600 hover:bg-indigo-700 text-white px-3 py-1.5 rounded-lg font-bold text-xs shadow-md transition-all flex items-center gap-1.5">
+            <button onclick="window.print()" class="no-print bg-indigo-600 hover:bg-indigo-700 text-white px-2.5 py-1.2 rounded-md font-bold text-[10px] shadow-sm transition-all flex items-center gap-1">
                 🖨️ طباعة التقرير الفوري (A4)
             </button>
         </header>
 
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-3">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-2.5">
             <!-- Left Sidebar for Task Entry -->
             <aside class="lg:col-span-3 no-print">
-                <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 sticky top-4">
-                    <h2 class="text-xs font-black mb-2.5 text-slate-800 border-b pb-1.5 flex items-center gap-1.5">
+                <div class="bg-white p-3.5 rounded-lg shadow-sm border border-slate-200 sticky top-3">
+                    <h2 class="text-[11px] font-black mb-2 text-slate-800 border-b pb-1 flex items-center gap-1">
                         <span>📝</span> تسجيل مهمة منجزة
                     </h2>
-                    <form id="taskForm" class="space-y-2.5">
+                    <form id="taskForm" class="space-y-2">
                         <div>
-                            <label class="block text-[10px] font-black text-slate-500 mb-0.5">عضو الفريق</label>
-                            <select id="member" class="w-full text-xs border-slate-200 rounded-lg p-2 bg-slate-50 border outline-none" onchange="updateTaskOptions()">
+                            <label class="block text-[9px] font-black text-slate-500 mb-0.5">عضو الفريق</label>
+                            <select id="member" class="w-full text-[11px] border-slate-200 rounded-md p-1.5 bg-slate-50 border outline-none font-bold" onchange="updateTaskOptions()">
                                 <option value="ehab">إيهاب (المترجم)</option>
                                 <option value="ali">علي (المدقق اللغوي)</option>
                                 <option value="leader">قائد الفريق</option>
                             </select>
                         </div>
                         <div>
-                            <label class="block text-[10px] font-black text-slate-500 mb-0.5">اسم المهمة / عنوان المقال</label>
-                            <input type="text" id="taskTitle" required placeholder="مثال: مقال فوائد القهوة الخضراء..." class="w-full text-xs border-slate-200 rounded-lg p-2 border outline-none">
+                            <label class="block text-[9px] font-black text-slate-500 mb-0.5">اسم المهمة / عنوان المقال</label>
+                            <input type="text" id="taskTitle" required placeholder="مثال: فوائد القهوة الخضراء..." class="w-full text-[11px] border-slate-200 rounded-md p-1.5 border outline-none">
                         </div>
                         <div>
-                            <label class="block text-[10px] font-black text-slate-500 mb-0.5">نوع النشاط</label>
-                            <select id="taskType" class="w-full text-xs border-slate-200 rounded-lg p-2 border outline-none"></select>
+                            <label class="block text-[9px] font-black text-slate-500 mb-0.5">نوع النشاط</label>
+                            <select id="taskType" class="w-full text-[11px] border-slate-200 rounded-md p-1.5 border outline-none"></select>
                         </div>
                         <div>
-                            <label class="block text-[10px] font-black text-slate-500 mb-0.5">معيار جودة المحتوى المطبق</label>
-                            <select id="quality" class="w-full text-xs border-slate-200 rounded-lg p-2 border outline-none">
+                            <label class="block text-[9px] font-black text-slate-500 mb-0.5">معيار جودة المحتوى المطبق</label>
+                            <select id="quality" class="w-full text-[11px] border-slate-200 rounded-md p-1.5 border outline-none">
                                 <option value="SEO">تحسين محركات البحث SEO وتوزيع الكلمات المفتاحية</option>
                                 <option value="لغة">سلامة الصياغة، التدقيق اللغوي الكامل والانسجام</option>
                                 <option value="هيكلة">هيكلة الأفكار وانسيابية الفقرات وتناسقها</option>
@@ -137,99 +137,109 @@
                                 <option value="ابتكار">ابتكار العناوين الجاذبة واستخدام الأسلوب الفريد</option>
                             </select>
                         </div>
-                        <div class="flex items-center gap-2 p-1.5 bg-rose-50 border border-rose-100 rounded-lg">
-                            <input type="checkbox" id="urgent" class="w-3.5 h-3.5 text-rose-600 border-slate-300 rounded focus:ring-rose-500">
-                            <label for="urgent" class="text-[10px] font-black text-rose-700">مهمة عاجلة طارئة</label>
+                        
+                        <!-- Date & Time Picker Fields -->
+                        <div class="grid grid-cols-2 gap-1.5">
+                            <div>
+                                <label class="block text-[9px] font-black text-slate-500 mb-0.5">تاريخ الإنجاز</label>
+                                <input type="date" id="taskDate" required class="w-full text-[10px] border-slate-200 rounded-md p-1 border outline-none font-bold bg-slate-50">
+                            </div>
+                            <div>
+                                <label class="block text-[9px] font-black text-slate-500 mb-0.5">وقت الإنجاز</label>
+                                <input type="time" id="taskTime" required class="w-full text-[10px] border-slate-200 rounded-md p-1 border outline-none font-bold bg-slate-50">
+                            </div>
                         </div>
-                        <div class="text-[9px] text-slate-400 text-center font-bold">
-                            🕒 يتم إدخال اليوم والتوقيت آلياً فور الحفظ
+
+                        <div class="flex items-center gap-1.5 p-1 bg-rose-50 border border-rose-100 rounded-md">
+                            <input type="checkbox" id="urgent" class="w-3 h-3 text-rose-600 border-slate-300 rounded focus:ring-rose-500">
+                            <label for="urgent" class="text-[9px] font-black text-rose-700">مهمة عاجلة طارئة</label>
                         </div>
-                        <button type="submit" class="w-full bg-slate-950 text-white font-black text-xs py-2 rounded-lg hover:bg-black shadow transition-all">حفظ المهمة في المصفوفة</button>
+                        <button type="submit" class="w-full bg-slate-950 text-white font-black text-[11px] py-1.5 rounded-md hover:bg-black shadow transition-all">حفظ المهمة في المصفوفة</button>
                     </form>
-                    <button onclick="resetData()" class="w-full mt-3 text-[9px] text-slate-400 hover:text-rose-500 font-bold uppercase tracking-wider">تصفير السجل للبدء من جديد</button>
+                    <button onclick="resetData()" class="w-full mt-2 text-[8px] text-slate-400 hover:text-rose-500 font-bold uppercase tracking-wider">تصفير السجل للبدء من جديد</button>
                 </div>
             </aside>
 
             <!-- Main Dashboard Area -->
-            <main class="lg:col-span-9 space-y-3">
+            <main class="lg:col-span-9 space-y-2.5">
                 <!-- KPI & Infographics Header Section -->
-                <div class="grid grid-cols-1 md:grid-cols-12 gap-3">
+                <div class="grid grid-cols-1 md:grid-cols-12 gap-2.5">
                     
-                    <!-- Star Box (Compact Gold Design) -->
-                    <div id="starCard" class="md:col-span-3 bg-gradient-to-br from-amber-500 to-amber-600 text-white rounded-xl p-3 flex flex-col items-center justify-center text-center shadow relative overflow-hidden">
-                        <div class="absolute -top-3 -right-3 w-10 h-10 bg-amber-400/20 rounded-full blur-sm"></div>
-                        <span class="text-white/90 text-[8px] font-black tracking-widest mb-1 uppercase">🌟 نجم الأسبوع الحالي</span>
-                        <div id="starName" class="text-sm font-black mb-0.5 drop-shadow">--</div>
-                        <div id="starStats" class="text-[8px] bg-white/20 px-2 py-0.5 rounded-full text-white font-semibold">لا يوجد مهام كافية</div>
+                    <!-- Star Box (More Compact Gold Design) -->
+                    <div id="starCard" class="md:col-span-3 bg-gradient-to-br from-slate-900 to-slate-950 text-white rounded-lg p-2.5 flex flex-col items-center justify-center text-center shadow relative overflow-hidden transition-all duration-300">
+                        <div class="absolute -top-3 -right-3 w-8 h-8 bg-amber-400/10 rounded-full blur-sm"></div>
+                        <span class="text-amber-400 text-[8px] font-black tracking-widest mb-0.5 uppercase flex items-center gap-0.5">🌟 نجم الأسبوع بالأرقام</span>
+                        <div id="starName" class="text-xs font-black mb-0.5 drop-shadow">--</div>
+                        <div id="starStats" class="text-[7.5px] bg-white/10 px-1.5 py-0.5 rounded-full text-slate-300 font-bold">لا توجد مهام</div>
                     </div>
 
                     <!-- Performance Infographics (Progress Bars) -->
-                    <div class="md:col-span-9 bg-white p-3 rounded-xl shadow-sm border border-slate-100 grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div class="md:col-span-9 bg-white p-2.5 rounded-lg shadow-sm border border-slate-100 grid grid-cols-1 md:grid-cols-3 gap-3">
                         <!-- Translator Ehab Card -->
-                        <div class="space-y-1.5 border-l border-slate-100 last:border-l-0 pl-2">
+                        <div class="space-y-1 border-l border-slate-100 last:border-l-0 pl-1.5">
                             <div class="flex justify-between items-center">
-                                <span class="text-[10px] font-black text-slate-700 flex items-center gap-1">
+                                <span class="text-[9.5px] font-black text-slate-700 flex items-center gap-1">
                                     <span class="text-blue-500">🌐</span> إيهاب (المترجم)
                                 </span>
-                                <span id="pct-ehab" class="text-[10px] font-black text-blue-600">0%</span>
+                                <span id="pct-ehab" class="text-[9.5px] font-black text-blue-600">0%</span>
                             </div>
-                            <!-- Circular Progress Simulation via Sleek Bar -->
-                            <div class="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
+                            <!-- Sleek Progress Bar -->
+                            <div class="w-full bg-slate-100 h-1.5 rounded-full overflow-hidden">
                                 <div id="bar-ehab" class="bg-blue-500 h-full rounded-full transition-all duration-500" style="width: 0%"></div>
                             </div>
                             <div class="flex justify-between items-center text-[8px] text-slate-400 font-bold">
-                                <span>المستهدف: 3 مقالات</span>
-                                <span id="val-ehab">0 / 3</span>
+                                <span>المستهدف: 3 مقالات مترجمة</span>
+                                <span id="val-ehab" class="text-slate-600">0 / 3</span>
                             </div>
                         </div>
 
                         <!-- Proofreader Ali Card -->
-                        <div class="space-y-1.5 border-l border-slate-100 last:border-l-0 pl-2">
+                        <div class="space-y-1 border-l border-slate-100 last:border-l-0 pl-1.5">
                             <div class="flex justify-between items-center">
-                                <span class="text-[10px] font-black text-slate-700 flex items-center gap-1">
+                                <span class="text-[9.5px] font-black text-slate-700 flex items-center gap-1">
                                     <span class="text-emerald-500">🖋️</span> علي (المدقق اللغوي)
                                 </span>
-                                <span id="pct-ali" class="text-[10px] font-black text-emerald-600">0%</span>
+                                <span id="pct-ali" class="text-[9.5px] font-black text-emerald-600">0%</span>
                             </div>
-                            <div class="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
+                            <div class="w-full bg-slate-100 h-1.5 rounded-full overflow-hidden">
                                 <div id="bar-ali" class="bg-emerald-500 h-full rounded-full transition-all duration-500" style="width: 0%"></div>
                             </div>
                             <div class="flex justify-between items-center text-[8px] text-slate-400 font-bold">
-                                <span>المستهدف: 3 مقالات</span>
-                                <span id="val-ali">0 / 3</span>
+                                <span>المستهدف: 3 مقالات (كتابة/تدقيق/اقتباس)</span>
+                                <span id="val-ali" class="text-slate-600">0 / 3</span>
                             </div>
                         </div>
 
                         <!-- Team Leader Card -->
-                        <div class="space-y-1.5">
+                        <div class="space-y-1">
                             <div class="flex justify-between items-center">
-                                <span class="text-[10px] font-black text-slate-700 flex items-center gap-1">
+                                <span class="text-[9.5px] font-black text-slate-700 flex items-center gap-1">
                                     <span class="text-indigo-500">👑</span> قائد الفريق
                                 </span>
-                                <span id="pct-leader" class="text-[10px] font-black text-indigo-600">0%</span>
+                                <span id="pct-leader" class="text-[9.5px] font-black text-indigo-600">0%</span>
                             </div>
-                            <div class="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
+                            <div class="w-full bg-slate-100 h-1.5 rounded-full overflow-hidden">
                                 <div id="bar-leader" class="bg-indigo-500 h-full rounded-full transition-all duration-500" style="width: 0%"></div>
                             </div>
                             <div class="flex justify-between items-center text-[8px] text-slate-400 font-bold">
-                                <span>الهدف: مقال+درافت+مراجعة</span>
-                                <span id="val-leader">0 / 3</span>
+                                <span>المستهدف: 1 مقال + درافت ومراجعة</span>
+                                <span id="val-leader" class="text-slate-600">0 / 3</span>
                             </div>
                         </div>
                     </div>
                 </div>
 
                 <!-- Matrix Table Container -->
-                <section class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
-                    <div class="bg-slate-900 text-white px-3 py-2 flex justify-between items-center">
-                        <h3 class="text-[10px] font-black tracking-wider uppercase">مصفوفة توزيع الجهد الأسبوعي الفعلي (الأحد - الخميس)</h3>
-                        <div id="currentDateDisplay" class="text-[9px] font-bold opacity-80"></div>
+                <section class="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden">
+                    <div class="bg-slate-900 text-white px-2.5 py-1.5 flex justify-between items-center">
+                        <h3 class="text-[9px] font-black tracking-wider uppercase">مصفوفة توزيع الجهد الأسبوعي الفعلي (الأحد - الخميس)</h3>
+                        <div id="currentDateDisplay" class="text-[8px] font-bold opacity-80"></div>
                     </div>
                     <div class="overflow-x-auto">
                         <table class="w-full matrix-table text-right border-collapse">
                             <thead>
                                 <tr>
-                                    <th class="p-2 w-[16%] bg-slate-50">اسم العضو والمسؤولية</th>
+                                    <th class="p-1.5 w-[15%] bg-slate-50">اسم العضو والمسؤولية</th>
                                     <th>الأحد</th>
                                     <th>الإثنين</th>
                                     <th>الثلاثاء</th>
@@ -259,18 +269,18 @@
             },
             ali: { 
                 name: 'علي (المدقق اللغوي)', 
-                targetDesc: '3 مقالات (كتابة/تدقيق/اقتباس)',
+                targetDesc: '3 مقالات كتابة/تدقيق/اقتباس',
                 targetNum: 3
             },
             leader: { 
                 name: 'قائد الفريق', 
-                targetDesc: 'مقال + درافت ومراجعة العمل',
-                targetNum: 3 // مقال (1) + درافت (1) + مراجعة (1)
+                targetDesc: '1 مقال + درافت ومراجعة الفريق',
+                targetNum: 3 // مقال (1) + مراجعة (1) + درافت (1)
             }
         };
 
         // تحميل وحفظ المهام من التخزين المحلي للمتصفح
-        let tasks = JSON.parse(localStorage.getItem('content_team_tracker_system_v3')) || [];
+        let tasks = JSON.parse(localStorage.getItem('content_team_tracker_system_v4')) || [];
 
         // تحديث خيارات ونوعية الأنشطة المتاحة لكل عضو
         function updateTaskOptions() {
@@ -308,23 +318,52 @@
             });
         }
 
+        // تعيين التاريخ والوقت الحاليين تلقائيًا في عناصر الإدخال
+        function setDefaultDateTime() {
+            const now = new Date();
+            // تنسيق التاريخ كـ YYYY-MM-DD
+            const year = now.getFullYear();
+            const month = String(now.getMonth() + 1).padStart(2, '0');
+            const day = String(now.getDate()).padStart(2, '0');
+            document.getElementById('taskDate').value = `${year}-${month}-${day}`;
+            
+            // تنسيق الوقت كـ HH:MM
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            document.getElementById('taskTime').value = `${hours}:${minutes}`;
+        }
+
+        // معالجة إضافة المهمة الجديدة
         document.getElementById('taskForm').addEventListener('submit', (e) => {
             e.preventDefault();
-            const now = new Date();
             
-            // تحديد اليوم باللغة العربية بناءً على اليوم الحالي
-            const dayOfWeek = now.getDay(); 
+            const dateVal = document.getElementById('taskDate').value; // YYYY-MM-DD
+            const timeVal = document.getElementById('taskTime').value; // HH:MM
+
+            // بناء كائن تاريخ مخصص بناءً على اختيار المستخدم
+            const selectedDate = new Date(`${dateVal}T${timeVal}`);
+            
+            // تحديد اليوم باللغة العربية بناءً على اليوم المحدد في الكاليندر
+            const dayOfWeek = selectedDate.getDay(); 
             let dayName = "الأحد"; // القيمة الافتراضية
-            if (dayOfWeek === 0) dayName = "الأحد";
-            else if (dayOfWeek === 1) dayName = "الإثنين";
+            if (dayOfWeek === 1) dayName = "الإثنين";
             else if (dayOfWeek === 2) dayName = "الثلاثاء";
             else if (dayOfWeek === 3) dayName = "الأربعاء";
             else if (dayOfWeek === 4) dayName = "الخميس";
+            else if (dayOfWeek === 0) dayName = "الأحد";
             else {
-                // إرجاعها للأحد تلقائياً في حالة تسجيل المهمة خلال العطلة (الجمعة/السبت) لضمان اتساق المصفوفة
-                dayName = "الأحد";
+                // للجمعة والسبت نقوم بتوجيهها آلياً لأقرب يوم عمل مناسب (الأحد أو الخميس) لكي لا تخرج خارج المصفوفة
+                dayName = dayOfWeek === 5 ? "الخميس" : "الأحد";
             }
             
+            // تنسيق الوقت المدخل بصيغة ص / م بالعربية الفصحى
+            const [hoursStr, minutesStr] = timeVal.split(':');
+            let hours = parseInt(hoursStr, 10);
+            const period = hours >= 12 ? 'م' : 'ص';
+            hours = hours % 12;
+            hours = hours ? hours : 12; 
+            const formattedTime = `${hours}:${minutesStr} ${period}`;
+
             const task = {
                 id: Date.now(),
                 memberKey: document.getElementById('member').value,
@@ -332,54 +371,56 @@
                 type: document.getElementById('taskType').options[document.getElementById('taskType').selectedIndex].text,
                 quality: document.getElementById('quality').options[document.getElementById('quality').selectedIndex].text,
                 urgent: document.getElementById('urgent').checked,
-                time: now.toLocaleTimeString('ar-EG', {hour:'2-digit', minute:'2-digit'}),
+                time: formattedTime,
                 day: dayName,
-                date: now.toLocaleDateString('ar-EG', {month: 'numeric', day: 'numeric'})
+                date: selectedDate.toLocaleDateString('ar-EG', {month: 'numeric', day: 'numeric'})
             };
 
             tasks.push(task);
-            localStorage.setItem('content_team_tracker_system_v3', JSON.stringify(tasks));
+            localStorage.setItem('content_team_tracker_system_v4', JSON.stringify(tasks));
             render();
             
-            // تصفير الخانات
+            // تصفير حقول العنوان والعجلة وتحديث قيم التاريخ والوقت تلقائياً للوقت الحالي
             document.getElementById('taskTitle').value = '';
             document.getElementById('urgent').checked = false;
+            setDefaultDateTime();
         });
 
+        // تحديث وعرض البيانات بالكامل داخل لوحة التحكم والمصفوفة الأسبوعية
         function render() {
             const matrixBody = document.getElementById('matrixBody');
             matrixBody.innerHTML = '';
 
             const counts = { ehab: 0, ali: 0, leader: 0 };
 
-            // بناء الصفوف للمصفوفة
+            // بناء مصفوفة الصفوف التفصيلية لكل عضو في الفريق
             Object.entries(MEMBERS).forEach(([key, info]) => {
                 const row = document.createElement('tr');
                 
-                // عمود العضو ومستهدفه في ترويسة الصف
-                let memberCell = `<td class="member-row-header p-2 border-b border-slate-300">
-                    <div class="text-[11px] font-black text-slate-900">${info.name.split(' ')[0]}</div>
-                    <div class="text-[8px] text-indigo-700 font-extrabold mt-0.5 leading-tight">${info.targetDesc}</div>
+                // ترويسة صف العضو مع توضيح الهدف الإداري المعتمد له
+                let memberCell = `<td class="member-row-header p-1.5 border-b border-slate-300">
+                    <div class="text-[10px] font-black text-slate-900 leading-tight">${info.name.split(' ')[0]}</div>
+                    <div class="text-[7.5px] text-indigo-700 font-extrabold mt-0.5 leading-tight">${info.targetDesc}</div>
                 </td>`;
                 row.innerHTML = memberCell;
 
-                // تعبئة الأيام من الأحد للخميس
+                // وضع المهام في خانة الأيام المقابلة لها تلقائياً
                 DAYS_AR.forEach(day => {
                     const dayTasks = tasks.filter(t => t.memberKey === key && t.day === day);
                     
-                    // حساب العدد الكلي للمهام بدون التكرار اليومي للمخطط البصري
+                    // حساب إجمالي عدد المهام المنجزة بغض النظر عن الأيام لغايات التقييم
                     counts[key] += dayTasks.length;
 
                     let cellHtml = `<td class="p-1 border-b border-slate-200">`;
                     dayTasks.forEach(t => {
                         cellHtml += `
-                            <div class="task-tag ${t.urgent ? 'border-rose-500 bg-rose-50/70' : 'border-indigo-500 bg-indigo-50/10'}" title="${t.quality}">
-                                <div class="font-black text-slate-800 text-[8.5px] leading-tight break-words">${t.title}</div>
-                                <div class="flex flex-col gap-0.5 mt-1 text-[7px] text-slate-500 font-bold border-t border-slate-100 pt-0.5">
+                            <div class="task-tag ${t.urgent ? 'border-rose-500 bg-rose-50' : 'border-indigo-500 bg-indigo-50/10'}" title="${t.quality}">
+                                <div class="font-black text-slate-800 text-[8px] leading-snug break-words">${t.title}</div>
+                                <div class="flex flex-col gap-0.5 mt-0.5 text-[6.5px] text-slate-500 font-bold border-t border-slate-100 pt-0.5">
                                     <span class="text-slate-600 truncate">${t.type}</span>
                                     <span class="text-indigo-600 flex justify-between items-center">
                                         <span>⏰ ${t.time}</span>
-                                        <span class="text-[6.5px] text-slate-400 font-semibold">(${t.date})</span>
+                                        <span class="text-[6px] text-slate-400 font-semibold">(${t.date})</span>
                                     </span>
                                 </div>
                             </div>`;
@@ -390,33 +431,33 @@
                 matrixBody.appendChild(row);
             });
 
-            // تحديث مؤشرات الأداء والانفوجرافيك البصري
+            // تحديث الانفوجرافيك الذكي ومؤشرات الأداء الدائرية/الشريطية
             Object.entries(MEMBERS).forEach(([key, info]) => {
                 const achieved = counts[key];
                 const target = info.targetNum;
+                // حساب دقيق للنسب المئوية بناءً على مستهدفات الإنجاز المقررة
                 const percentage = Math.min(Math.round((achieved / target) * 100), 100);
 
-                // تعبئة البيانات في الإنفوجرافيك
                 document.getElementById(`pct-${key}`).innerText = `${percentage}%`;
                 document.getElementById(`bar-${key}`).style.width = `${percentage}%`;
                 
                 if (key === 'leader') {
-                    document.getElementById(`val-${key}`).innerText = `${achieved} مهام منجزة`;
+                    document.getElementById(`val-${key}`).innerText = `${achieved} منجزة (مستهدف: 1 مقال + درافت ومراجعة)`;
                 } else {
                     document.getElementById(`val-${key}`).innerText = `${achieved} / ${target}`;
                 }
             });
 
-            // تحديد نجم الأسبوع بشكل تنافسي شريف وعادل معتمد على الحجم الرقمي الكلي
+            // ترشيح نجم الأسبوع بناءً على "إجمالي عدد المهام المنجزة" لتشجيع زيادة وتيرة العمل
             const totalTasks = tasks.length;
-            if(totalTasks > 0) {
+            if (totalTasks > 0) {
+                // الفائز هو صاحب أكبر عدد تراكمي للمهام الإجمالية في مصفوفة الإحصاء
                 const winnerKey = Object.keys(counts).reduce((a, b) => counts[a] >= counts[b] ? a : b);
                 
-                // التأكد من أن النجم قد حقق مهمة واحدة على الأقل
                 if (counts[winnerKey] > 0) {
                     document.getElementById('starName').innerText = MEMBERS[winnerKey].name.split(' ')[0];
-                    document.getElementById('starStats').innerText = `بإجمالي ${counts[winnerKey]} مهمة منفذة`;
-                    document.getElementById('starCard').className = "md:col-span-3 bg-gradient-to-br from-amber-500 to-amber-600 text-white rounded-xl p-3 flex flex-col items-center justify-center text-center shadow relative overflow-hidden transition-all duration-300 transform hover:scale-102";
+                    document.getElementById('starStats').innerText = `أنجز ${counts[winnerKey]} مهام مختلفة بنجاح`;
+                    document.getElementById('starCard').className = "md:col-span-3 bg-gradient-to-br from-amber-500 to-amber-600 text-white rounded-lg p-2.5 flex flex-col items-center justify-center text-center shadow relative overflow-hidden transition-all duration-300 transform scale-102";
                 } else {
                     resetStarCard();
                 }
@@ -427,28 +468,29 @@
 
         function resetStarCard() {
             document.getElementById('starName').innerText = "--";
-            document.getElementById('starStats').innerText = "لا توجد بيانات";
-            document.getElementById('starCard').className = "md:col-span-3 bg-slate-900 text-white rounded-xl p-3 flex flex-col items-center justify-center text-center shadow relative overflow-hidden";
+            document.getElementById('starStats').innerText = "لا توجد بيانات كافية";
+            document.getElementById('starCard').className = "md:col-span-3 bg-slate-900 text-white rounded-lg p-2.5 flex flex-col items-center justify-center text-center shadow relative overflow-hidden";
         }
 
-        // تصفير وحذف السجلات لبدء أسبوع جديد
+        // مسح كافة المهام الحالية لبدء دورة أسبوع عمل جديد
         function resetData() {
             const verify = confirm('سيتم تصفير كافة السجلات الحالية وبدء أسبوع عمل جديد، هل أنت متأكد؟');
             if(verify) {
                 tasks = [];
-                localStorage.removeItem('content_team_tracker_system_v3');
+                localStorage.removeItem('content_team_tracker_system_v4');
                 render();
             }
         }
 
         window.onload = () => {
-            // عرض التاريخ الحالي بشكل دقيق في الترويسة
+            // عرض التاريخ الحالي بشكل دقيق ومحلي في ترويسة الصفحة
             document.getElementById('currentDateDisplay').innerText = new Date().toLocaleDateString('ar-EG', {
                 weekday: 'long', 
                 year:'numeric', 
                 month:'long', 
                 day:'numeric'
             });
+            setDefaultDateTime();
             updateTaskOptions();
             render();
         };
