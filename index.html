@@ -602,32 +602,7 @@
                 });
                 matrixBody.appendChild(row);
             });
-
-            // تحديث الانفوجرافيك ومؤشرات الأداء الدائرية/الشريطية للأهداف الأساسية فقط
-            Object.entries(MEMBERS).forEach(([key, info]) => {
-                const achieved = coreTargetCounts[key];
-                const target = info.targetNum;
-                // حساب دقيق للنسب المئوية بناءً على مستهدفات الإنجاز المقررة للمقالات الأساسية
-                const percentage = Math.min(Math.round((achieved / target) * 100), 100);
-
-                document.getElementById(`pct-${key}`).innerText = `${percentage}%`;
-                document.getElementById(`bar-${key}`).style.width = `${percentage}%`;
-                
-                if (key === 'leader') {
-                    // توضيح عدد المقالات الأساسية المنجزة مع الإبقاء على مراجعة المسودات كمهام إضافية في التوتال
-                    const extraDrafts = tasks.filter(t => t.memberKey === 'leader' && t.typeKey === 'draft').length;
-                    const extraReviews = tasks.filter(t => t.memberKey === 'leader' && t.typeKey === 'review').length;
-                    document.getElementById(`val-${key}`).innerText = `${achieved} مقال أساسي من 5 (إضافة لـ ${extraDrafts} مسودة و ${extraReviews} مراجعة)`;
-                } else {
-                    document.getElementById(`val-${key}`).innerText = `${achieved} مقالاً من 15 المخطط لها`;
-                }
-            });
-
-            // ترشيح نجم الأسبوع بناءً على "إجمالي عدد المهام المنجزة" الفعلي لتشجيع كافة أنواع المجهودات
-            const totalTasks = tasks.length;
-            if (totalTasks > 0) {
-                // صاحب أكبر عدد تراكمي للمهام الإجمالية (بما فيها المراجعات والمسودات والأخرى)
-                const winnerKey = Object.keys(totalCounts).reduce((a, b) => totalCounts[a] >= totalCounts[b] ? a : b);
+// تحديث الانفوجرافيك ومؤشرات الأداء الدائرية/الشريطية للأهداف الأساسية فقط Object.entries(MEMBERS).forEach(([key, info]) => { const achieved = coreTargetCounts[key]; const target = info.targetNum; // حساب دقيق للنسب المئوية بناءً على مستهدفات الإنجاز المقررة للمقالات الأساسية const percentage = Math.min(Math.round((achieved / target) * 100), 100); document.getElementById(`pct-${key}`).innerText = `${percentage}%`; document.getElementById(`bar-${key}`).style.width = `${percentage}%`; // تحديث النص ليعرض الإنجاز مقابل المستهدف مباشرةً للجميع document.getElementById(`val-${key}`).innerText = `${achieved} مقالاً من ${target} المخطط لها`; }); // ترشيح نجم الأسبوع بناءً على "إجمالي عدد المهام المنجزة" الفعلي لتشجيع كافة أنواع المجهودات const totalTasks = tasks.length;
                 
                 if (totalCounts[winnerKey] > 0) {
                     document.getElementById('starName').innerText = MEMBERS[winnerKey].name.split(' ')[0];
