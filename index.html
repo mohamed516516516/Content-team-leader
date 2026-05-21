@@ -59,7 +59,7 @@
         <div class="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4">
             <div>
                 <h1 class="text-xl font-bold tracking-wide">منصة قياس الأداء الأسبوعي الذكية</h1>
-                <p class="text-xs text-indigo-200">المستهدف الأسبوعي المستمر من الأحد إلى الخميس - أوزان موحدة</p>
+                <p class="text-xs text-indigo-200">المستهدف الأسبوعي المستمر من الأحد إلى الخميس - قياس نوعي للمقالات</p>
             </div>
             <div class="flex gap-2">
                 <button onclick="window.print()" class="bg-emerald-600 hover:bg-emerald-700 px-4 py-1.5 rounded-lg text-sm font-medium transition shadow flex items-center gap-1 cursor-pointer">
@@ -98,14 +98,14 @@
                         </div>
                         <div class="text-left">
                             <span id="mohamed-count" class="text-2xl font-bold text-indigo-600">0</span>
-                            <span class="text-slate-400 text-xs">/ 5 مقالات</span>
+                            <span class="text-slate-400 text-xs">/ 5 مقالات فعليّة</span>
                         </div>
                     </div>
                     <div class="mt-4">
                         <div class="w-full bg-slate-100 h-2.5 rounded-full overflow-hidden">
                             <div id="mohamed-bar" class="bg-indigo-600 h-2.5 rounded-full transition-all duration-500" style="width: 0%"></div>
                         </div>
-                        <p id="mohamed-pct" class="text-xs text-slate-500 mt-1 text-left">0% من الكفاءة العامة</p>
+                        <p id="mohamed-pct" class="text-xs text-slate-500 mt-1 text-left">0% من المستهدف</p>
                     </div>
                 </div>
 
@@ -118,7 +118,7 @@
                         </div>
                         <div class="text-left">
                             <span id="ali-count" class="text-2xl font-bold text-emerald-600">0</span>
-                            <span class="text-slate-400 text-xs">/ 15 مقالاً</span>
+                            <span class="text-slate-400 text-xs">/ 15 مقالاً فعليّاً</span>
                         </div>
                     </div>
                     <div class="mt-4">
@@ -138,7 +138,7 @@
                         </div>
                         <div class="text-left">
                             <span id="ihab-count" class="text-2xl font-bold text-amber-600">0</span>
-                            <span class="text-slate-400 text-xs">/ 15 مقالاً</span>
+                            <span class="text-slate-400 text-xs">/ 15 مقالاً فعليّاً</span>
                         </div>
                     </div>
                     <div class="mt-4">
@@ -154,7 +154,7 @@
             <div id="star-card" class="bg-gradient-to-br from-slate-50 to-slate-100 p-5 rounded-2xl shadow-sm border border-slate-200 flex flex-col justify-between transition-all">
                 <div class="flex justify-between items-center">
                     <h3 class="text-md font-bold text-slate-700 flex items-center gap-1">
-                        <span>🏆 نجم الأسبوع</span>
+                        <span>🏆 نجم الأسبوع للمقالات</span>
                     </h3>
                     <span class="text-xl">👑</span>
                 </div>
@@ -163,7 +163,7 @@
                     <p id="star-reason" class="text-xs text-slate-500 mt-1 font-medium">لم يتم تحقيق المستهدف بعد</p>
                 </div>
                 <div class="bg-slate-200/60 p-2 rounded-lg text-[11px] text-center text-slate-700 font-semibold" id="star-badge">
-                    الإنتاجية تصنع الفارق
+                    المقالات المنجزة تصنع الفارق
                 </div>
             </div>
         </div>
@@ -184,18 +184,18 @@
                     </div>
                     <div>
                         <label class="block text-xs font-medium text-slate-500 mb-1">عنوان المقال / المهمة</label>
-                        <input type="text" id="task-title" placeholder="أدخل اسم المقال المنجز..." class="w-full bg-slate-50 border border-slate-200 rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-indigo-500 outline-none" required>
+                        <input type="text" id="task-title" placeholder="أدخل اسم المقال أو التنبيه..." class="w-full bg-slate-50 border border-slate-200 rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-indigo-500 outline-none" required>
                     </div>
                     <div>
                         <label class="block text-xs font-medium text-slate-500 mb-1">نوع المهمة</label>
-                        <select id="task-type" class="w-full bg-slate-50 border border-slate-200 rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-indigo-500 outline-none" required>
-                            <option value="ترجمة">ترجمة</option>
-                            <option value="كتابة">كتابة</option>
-                            <option value="تدقيق">تدقيق</option>
-                            <option value="مسودة">مسودة</option>
-                            <option value="اقتباس">اقتباس</option>
-                            <option value="أخرى">أخرى</option>
-                            <option value="عاجلة">⚠️ عاجلة</option>
+                        <select id="task-type" class="w-full bg-slate-50 border border-slate-200 rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-indigo-500 outline-none font-medium" required>
+                            <option value="كتابة" class="font-bold text-slate-900">✍️ كتابة مقال</option>
+                            <option value="ترجمة" class="font-bold text-slate-900">🌐 ترجمة مقال</option>
+                            <option value="تدقيق" class="font-bold text-slate-900">✨ تدقيق مقال</option>
+                            <option value="اقتباس" class="font-bold text-slate-900">📋 اقتباس مقال</option>
+                            <option value="مسودة" class="text-slate-500">📝 مسودة (خارج المقياس)</option>
+                            <option value="عاجلة" class="text-red-600">⚠️ عاجلة (خارج المقياس)</option>
+                            <option value="أخرى" class="text-slate-500">⚙️ أخرى (خارج المقياس)</option>
                         </select>
                     </div>
                     <!-- تحديد اليوم المرصود -->
@@ -236,8 +236,10 @@
     <!-- محرك التحكم والذكاء البرمجي للوحة التحكم -->
     <script>
         const TARGETS = { "محمد": 5, "علي": 15, "إيهاب": 15 };
-        const CALC_TARGETS = { "محمد": 15, "علي": 15, "إيهاب": 15 };
         
+        // أنواع المهام المسموح بدخولها في حساب الأداء والنسب المئوية ونجم الأسبوع
+        const VALID_PERFORMANCE_TYPES = ["كتابة", "ترجمة", "تدقيق", "اقتباس"];
+
         const DAYS = ["الأحد", "الإثنين", "الثلاثاء", "الأربعاء", "الخميس"];
         const SYSTEM_DAYS = ["الأحد", "الإثنين", "الثلاثاء", "الأربعاء", "الخميس", "الجمعة", "السبت"];
 
@@ -310,34 +312,34 @@
         }
 
         function updateUI() {
-            const counts = { "محمد": 0, "علي": 0, "إيهاب": 0 };
+            // مخزن لحساب المهام التي تقع ضمن الأداء المعتمد فقط
+            const performanceCounts = { "محمد": 0, "علي": 0, "إيهاب": 0 };
             
             tasks.forEach(t => { 
-                if(counts[t.member] !== undefined) counts[t.member]++; 
-            });
-
-            // 1. تحديث واجهات كروت المستهدف
-            Object.keys(TARGETS).forEach(m => {
-                let idPrefix = m === "محمد" ? "mohamed" : m === "علي" ? "ali" : "ihab";
-                document.getElementById(`${idPrefix}-count`).innerText = counts[m];
-                
-                let pct = Math.min(Math.round((counts[m] / CALC_TARGETS[m]) * 100), 100);
-                document.getElementById(`${idPrefix}-bar`).style.width = `${pct}%`;
-                
-                if (m === "محمد") {
-                    document.getElementById(`${idPrefix}-pct`).innerText = `${pct}% من الكفاءة العامة الفردية`;
-                } else {
-                    document.getElementById(`${idPrefix}-pct`).innerText = `${pct}% من المستهدف الأسبوعي`;
+                if(performanceCounts[t.member] !== undefined && VALID_PERFORMANCE_TYPES.includes(t.type)) {
+                    performanceCounts[t.member]++; 
                 }
             });
 
-            // 2. احتساب تتويج نجم الأسبوع
+            // 1. تحديث واجهات كروت المستهدف بناءً على مقياس المقالات الفعلية فقط
+            Object.keys(TARGETS).forEach(m => {
+                let idPrefix = m === "محمد" ? "mohamed" : m === "علي" ? "ali" : "ihab";
+                let validCount = performanceCounts[m];
+                
+                document.getElementById(`${idPrefix}-count`).innerText = validCount;
+                
+                let pct = Math.min(Math.round((validCount / TARGETS[m]) * 100), 100);
+                document.getElementById(`${idPrefix}-bar`).style.width = `${pct}%`;
+                document.getElementById(`${idPrefix}-pct`).innerText = `${pct}% من مستهدف المقالات`;
+            });
+
+            // 2. احتساب تتويج نجم الأسبوع للمقالات الفعلية فقط
             let starMember = null;
             let maxTasks = 0;
 
             Object.keys(TARGETS).forEach(m => {
-                if (counts[m] > maxTasks && counts[m] > 0) {
-                    maxTasks = counts[m];
+                if (performanceCounts[m] > maxTasks && performanceCounts[m] > 0) {
+                    maxTasks = performanceCounts[m];
                     starMember = m;
                 }
             });
@@ -347,26 +349,25 @@
             const starBadgeEl = document.getElementById('star-badge');
             const starCardEl = document.getElementById('star-card');
 
-            // التنسيق في شاشة المتصفح العادية
             if (starMember) {
                 starNameEl.innerText = starMember;
-                starReasonEl.innerText = `يتصدر الفريق هذا الأسبوع برصيد إنجاز يبلغ ${maxTasks} مهام مضافة! 🔥`;
-                starBadgeEl.innerText = `صاحب أعلى إنتاجية عددية حالياً`;
+                starReasonEl.innerText = `يتصدر الفريق هذا الأسبوع برصيد ${maxTasks} مقالات منجزة فعلياً! 🔥`;
+                starBadgeEl.innerText = `صاحب أعلى إنتاجية للمقالات`;
                 starCardEl.className = "bg-gradient-to-br from-amber-400 to-orange-500 p-5 rounded-2xl shadow-md border border-amber-300 text-white flex flex-col justify-between transition-all";
                 starNameEl.className = "text-2xl font-extrabold text-white drop-shadow-sm";
                 starReasonEl.className = "text-xs text-amber-100 mt-1 font-medium";
                 starBadgeEl.className = "bg-black/20 p-2 rounded-lg text-[11px] text-center text-white font-semibold";
             } else {
                 starNameEl.innerText = "في انتظار الإنجاز";
-                starReasonEl.innerText = "لم يتم رصد أي مقالات مضافة للأسبوع";
-                starBadgeEl.innerText = "الإنتاجية تصنع الفارق";
+                starReasonEl.innerText = "لم يتم رصد مقالات فعلية مؤهلة للحساب";
+                starBadgeEl.innerText = "المقالات المنجزة تصنع الفارق";
                 starCardEl.className = "bg-gradient-to-br from-slate-50 to-slate-100 p-5 rounded-2xl shadow-sm border border-slate-200 flex flex-col justify-between transition-all";
                 starNameEl.className = "text-2xl font-extrabold text-slate-700";
                 starReasonEl.className = "text-xs text-slate-500 mt-1 font-medium";
                 starBadgeEl.className = "bg-slate-200/60 p-2 rounded-lg text-[11px] text-center text-slate-700 font-semibold";
             }
 
-            // 3. تحديث هيكل الكاليندر الأسبوعي وتوزيع الكروت
+            // 3. تحديث هيكل الكاليندر الأسبوعي وتوزيع الكروت (يعرض كل شيء للتنظيم الإداري)
             const calendarContainer = document.getElementById('weekly-interactive-calendar');
             calendarContainer.innerHTML = '';
             const todayName = SYSTEM_DAYS[new Date().getDay()];
@@ -390,9 +391,11 @@
                 let tasksListHTML = `<div class="space-y-1.5 flex-1 overflow-y-auto max-h-[300px]">`;
                 if(dayTasks.length > 0) {
                     dayTasks.forEach(task => {
+                        let isPerformance = VALID_PERFORMANCE_TYPES.includes(task.type);
+                        
                         let badgeColor = task.type === "عاجلة" 
                             ? "bg-red-100 border-red-300 text-red-900 font-bold animate-pulse" 
-                            : (MEMBER_COLORS[task.member] || "bg-slate-100 text-slate-800");
+                            : (!isPerformance ? "bg-slate-100 border-slate-200 text-slate-500 opacity-80" : (MEMBER_COLORS[task.member] || "bg-slate-100 text-slate-800"));
 
                         tasksListHTML += `
                             <div class="p-2 rounded-lg border text-[11px] ${badgeColor} shadow-2xs relative group">
