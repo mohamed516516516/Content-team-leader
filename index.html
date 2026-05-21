@@ -190,7 +190,7 @@
                                 <div id="bar-ehab" class="bg-blue-500 h-full rounded-full transition-all duration-500" style="width: 0%"></div>
                             </div>
                             <div class="flex justify-between items-center text-[8px] text-slate-400 font-bold">
-                                <span>المستهدف: 15 مقال مترجم</span>
+                                <span>المستهدف: 15 مقالاً</span>
                                 <span id="val-ehab" class="text-slate-600">0 / 15</span>
                             </div>
                         </div>
@@ -207,7 +207,7 @@
                                 <div id="bar-ali" class="bg-emerald-500 h-full rounded-full transition-all duration-500" style="width: 0%"></div>
                             </div>
                             <div class="flex justify-between items-center text-[8px] text-slate-400 font-bold">
-                                <span>المستهدف: 15 مقال (كتابة/تدقيق)</span>
+                                <span>المستهدف: 15 مقالاً</span>
                                 <span id="val-ali" class="text-slate-600">0 / 15</span>
                             </div>
                         </div>
@@ -224,7 +224,7 @@
                                 <div id="bar-leader" class="bg-indigo-500 h-full rounded-full transition-all duration-500" style="width: 0%"></div>
                             </div>
                             <div class="flex justify-between items-center text-[8px] text-slate-400 font-bold">
-                                <span>المستهدف: 5 مقالات + درافت ومراجعة</span>
+                                <span>المستهدف: 5 مقالات</span>
                                 <span id="val-leader" class="text-slate-600">0 / 5</span>
                             </div>
                         </div>
@@ -262,30 +262,28 @@
     <script>
         const DAYS_AR = ["الأحد", "الإثنين", "الثلاثاء", "الأربعاء", "الخميس"];
         
-        // الهيكلة الرسمية للفريق والأهداف المحددة بعد التعديل
+        // الهيكلة الرسمية والمستهدف الصافي بدون أي إضافات خارجية
         const MEMBERS = {
             ehab: { 
                 name: 'إيهاب (المترجم)', 
-                targetDesc: '15 مقال مترجم',
+                targetDesc: 'المستهدف: 15 مقالاً',
                 targetNum: 15
             },
             ali: { 
                 name: 'علي (المدقق اللغوي)', 
-                targetDesc: '15 مقال كتابة/تدقيق/اقتباس',
+                targetDesc: 'المستهدف: 15 مقالاً',
                 targetNum: 15
             },
             leader: { 
                 name: 'محمد (قائد الفريق)', 
-                targetDesc: '5 مقالات + مراجعة الفريق',
+                targetDesc: 'المستهدف: 5 مقالات',
                 targetNum: 5
             }
         };
 
-        // تحميل وحفظ المهام من التخزين المحلي للمتصفح
         let tasks = JSON.parse(localStorage.getItem('content_team_tracker_system_v4')) || [];
-        let editingTaskId = null; // متغير لحفظ الـ ID للمهمة الجاري تعديلها
+        let editingTaskId = null; 
 
-        // تحديث خيارات ونوعية الأنشطة المتاحة لكل عضو
         function updateTaskOptions() {
             const member = document.getElementById('member').value;
             const typeSelect = document.getElementById('taskType');
@@ -306,9 +304,7 @@
                 ];
             } else if (member === 'leader') {
                 types = [
-                    {v:'main', t:'كتابة/تدقيق المقال الأساسي اليومي'}, 
-                    {v:'review', t:'مراجعة عمل الفريق واعتماده'}, 
-                    {v:'draft', t:'عمل مسودات المقالات المعتمدة (Draft)'}, 
+                    {v:'write', t:'كتابة مقال'}, 
                     {v:'other', t:'أخرى'}
                 ];
             }
@@ -321,7 +317,6 @@
             });
         }
 
-        // تعيين التاريخ والوقت الحاليين تلقائيًا في عناصر الإدخال
         function setDefaultDateTime() {
             const now = new Date();
             const year = now.getFullYear();
@@ -334,7 +329,6 @@
             document.getElementById('taskTime').value = `${hours}:${minutes}`;
         }
 
-        // معالجة إضافة وتحديث المهمة
         document.getElementById('taskForm').addEventListener('submit', (e) => {
             e.preventDefault();
             
@@ -342,7 +336,6 @@
             const timeVal = document.getElementById('taskTime').value; 
 
             const selectedDate = new Date(`${dateVal}T${timeVal}`);
-            
             const dayOfWeek = selectedDate.getDay(); 
             let dayName = "الأحد"; 
             if (dayOfWeek === 1) dayName = "الإثنين";
@@ -376,12 +369,10 @@
             };
 
             if (editingTaskId) {
-                // تحديث المهمة الموجودة
                 const index = tasks.findIndex(t => t.id === editingTaskId);
                 if(index !== -1) tasks[index] = newTask;
-                cancelEdit(); // الخروج من وضع التعديل
+                cancelEdit(); 
             } else {
-                // إضافة مهمة جديدة
                 tasks.push(newTask);
             }
 
@@ -395,21 +386,18 @@
             }
         });
 
-        // دالة تفعيل التعديل
         window.editTask = function(id) {
             const task = tasks.find(t => t.id === id);
             if(!task) return;
             
             editingTaskId = id;
             
-            // تغيير واجهة النموذج
             document.getElementById('formTitle').innerHTML = `<span>✏️</span> تعديل المهمة`;
             document.getElementById('submitBtn').innerText = "تحديث التعديلات";
             document.getElementById('submitBtn').classList.replace('bg-slate-950', 'bg-blue-600');
             document.getElementById('submitBtn').classList.replace('hover:bg-black', 'hover:bg-blue-700');
             document.getElementById('cancelEditBtn').classList.remove('hidden');
 
-            // تعبئة البيانات
             document.getElementById('member').value = task.memberKey;
             updateTaskOptions();
             
@@ -428,7 +416,6 @@
             if(task.rawTime) document.getElementById('taskTime').value = task.rawTime;
         };
 
-        // إلغاء وضع التعديل
         window.cancelEdit = function() {
             editingTaskId = null;
             document.getElementById('formTitle').innerHTML = `<span>📝</span> تسجيل مهمة منجزة`;
@@ -442,7 +429,6 @@
             setDefaultDateTime();
         };
 
-        // دالة الحذف
         window.deleteTask = function(id) {
             if(confirm("هل أنت متأكد من حذف هذه المهمة من المصفوفة؟")) {
                 tasks = tasks.filter(t => t.id !== id);
@@ -452,7 +438,6 @@
             }
         };
 
-        // تحديث وعرض البيانات بالكامل
         function render() {
             const matrixBody = document.getElementById('matrixBody');
             matrixBody.innerHTML = '';
@@ -496,7 +481,6 @@
                 matrixBody.appendChild(row);
             });
 
-            // تحديث الانفوجرافيك الذكي بناءً على المستهدفات الجديدة
             let highestPercentage = -1;
             let starCandidate = null;
 
@@ -506,22 +490,19 @@
                 const percentage = Math.min(Math.round((achieved / target) * 100), 100);
                 const actualPct = (achieved / target) * 100;
 
-                // تحديث شرائط التقدم
                 document.getElementById(`pct-${key}`).innerText = `${percentage}%`;
                 document.getElementById(`bar-${key}`).style.width = `${percentage}%`;
                 document.getElementById(`val-${key}`).innerText = `${achieved} / ${target}`;
 
-                // البحث عن نجم الأسبوع بناءً على أعلى نسبة تحقيق للمستهدف
                 if (actualPct > highestPercentage || (actualPct === highestPercentage && starCandidate && counts[key] > counts[starCandidate])) {
                     highestPercentage = actualPct;
                     starCandidate = key;
                 }
             });
 
-            // تحديث كارد نجم الأسبوع
             if (tasks.length > 0 && highestPercentage > 0 && starCandidate) {
                 document.getElementById('starName').innerText = MEMBERS[starCandidate].name.split(' ')[0];
-                document.getElementById('starStats').innerText = `أنجز ${Math.round(highestPercentage)}% من المستهدف (${counts[starCandidate]} مهام)`;
+                document.getElementById('starStats').innerText = `حقّق ${Math.round(highestPercentage)}% من مستهدفه الصافي (${counts[starCandidate]} مقالات)`;
                 document.getElementById('starCard').className = "md:col-span-3 bg-gradient-to-br from-amber-500 to-amber-600 text-white rounded-lg p-2.5 flex flex-col items-center justify-center text-center shadow relative overflow-hidden transition-all duration-300 transform scale-102";
             } else {
                 resetStarCard();
